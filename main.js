@@ -1,12 +1,21 @@
-import {bubbleSort} from './sort-algs/bubbleSort.mjs';
-import {selectionSort} from './sort-algs/selectionSort.mjs';
-import {insertionSort} from './sort-algs/insertionSort.mjs';
-import {mergeSort} from './sort-algs/mergeSort.mjs';
+import {bubbleSort}     from './sort-algs/bubbleSort.mjs';
+import {selectionSort}  from './sort-algs/selectionSort.mjs';
+import {insertionSort}  from './sort-algs/insertionSort.mjs';
+import {mergeSort}      from './sort-algs/mergeSort.mjs';
+import {linearSearch}   from './search-algs/linearSearch.mjs';
+import {binarySearch}   from './search-algs/binarySearch.mjs';
+import * as fs from 'fs';
+
+// README 
+// This program executes the sort or search algorithms n times. The two main functions 'storeSortData' & 'storeSearchData' will create csv files, loop over a list of arrary lengths,
+// execute the function and then store the effiency data we get back from that. The nested for loop within both functions using index j can be changed to perform this action as many times
+// as neccessary, the functions will take an average an only store that value.
+// Executing the function looks like this functionCall(sortLengths, mergeSort, 'filename.csv', 1);
+// Where sortLengths is a pre initialised array of sizes that you would like to be tests. mergeSort is the function name of the chosen algorithm and '1' is the amount of test runs you would like to perform.
 
 
 
-
-function createArr(length) {
+function createSortArr(length) {
   let arr = [];
   for(let i = 0; i < length; i++) {
     arr.push(Math.floor(Math.random()*length));
@@ -14,250 +23,175 @@ function createArr(length) {
   return arr;
 };
 
-const arr100   = createArr(100);
-const arr1k    = createArr(1000);
-const arr5k    = createArr(5000);
-const arr10k   = createArr(10000);
-const arr20k   = createArr(20000);
-const arr40k   = createArr(40000);
-const arr80k   = createArr(80000);
-const arr120k  = createArr(120000);
-const arr160k  = createArr(160000);
-const arr200k  = createArr(200000);
-const arr240k  = createArr(240000);
-const arr280k  = createArr(280000);
-const arr320k  = createArr(320000);
-const arr360k  = createArr(360000);
-const arr400k  = createArr(400000);
-const arr450k  = createArr(450000);
-const arr500k  = createArr(500000);
+function createPartSortArr(length) {
+
+  let part93  = Math.floor(length * 0.93);
+  let part07  = Math.floor(length * 0.07);
+  let arr     = [];
+
+  for(let i = 0; i < part93; i++) {
+    arr.push(i);
+  };
+
+  for(let i = 0; i < part07; i++) {
+    arr.push(length - i);
+  };
+  return arr;
+};
+
+function createSearchArr(length) {
+  let arr = [];
+  for(let i = 1; i < length + 1; i++) {
+    arr.push(i);
+  };
+  return arr;
+};
 
 
 
+// --------------- SORT ------------- //
 
-// selction sort times
+function storeSortData(lengthsList, func, _file) {
 
-// let selection100Start = new Date().getTime();
-// selectionSort(arr100);
-// let selection100End = new Date().getTime();
-// let selection100 = (selection100End - selection100Start);
-// console.log(selection100);
+  // creates an empty csv file using the _file parameter
+  fs.writeFileSync(_file, '', 'utf8', (err) => {
+    if (err) {
+      console.log('An error occured during creation');
+    } else {
+      console.log('File created');
+    };
+  });
 
-// let selection1kStart = new Date().getTime();
-// selectionSort(arr1k);
-// let selection1kEnd = new Date().getTime();
-// let selection1k = (selection1kEnd - selection1kStart);
-// console.log(selection1k);
+  // loops over the lengthsList, so that we call the function for each array length
+  for(let i = 0; i < lengthsList.length; i++) {
 
-// let selection5kStart = new Date().getTime();
-// selectionSort(arr5k);
-// let selection5kEnd = new Date().getTime();
-// let selection5k = (selection5kEnd - selection5kStart);
-// console.log(selection5k);
+    // captures the execution time of the given function for that array length (lengthsList[i])
+    let arr       = lengthsList[i];
+    let startTime = new Date().getTime();
+    func(arr);
+    let endTime   = new Date().getTime();
+    let excTime = (endTime - startTime);
 
-// let selection10kStart = new Date().getTime();
-// selectionSort(arr10k);
-// let selection10kEnd = new Date().getTime();
-// let selection10k = (selection10kEnd - selection10kStart);
-// console.log(selection10k);
-
-// let selection20kStart = new Date().getTime();
-// selectionSort(arr20k);
-// let selection20kEnd = new Date().getTime();
-// let selection20k = (selection20kEnd - selection20kStart);
-// console.log(selection20k);
-
-// let selection40kStart = new Date().getTime();
-// selectionSort(arr40k);
-// let selection40kEnd = new Date().getTime();
-// let selection40k = (selection40kEnd - selection40kStart);
-// console.log(selection40k);
-
-// let selection80kStart = new Date().getTime();
-// selectionSort(arr80k);
-// let selection80kEnd = new Date().getTime();
-// let selection80k = (selection80kEnd - selection80kStart);
-// console.log(selection80k);
-
-// let selection120kStart = new Date().getTime();
-// selectionSort(arr120k);
-// let selection120kEnd = new Date().getTime();
-// let selection120k = (selection120kEnd - selection120kStart);
-// console.log(selection120k);
-
-// let selection160kStart = new Date().getTime();
-// selectionSort(arr160k);
-// let selection160kEnd = new Date().getTime();
-// let selection160k = (selection160kEnd - selection160kStart);
-// console.log(selection160k);
-
-// let selection200kStart = new Date().getTime();
-// selectionSort(arr200k);
-// let selection200kEnd = new Date().getTime();
-// let selection200k = (selection200kEnd - selection200kStart);
-// console.log(selection200k);
-
-// let selection240kStart = new Date().getTime();
-// selectionSort(arr240k);
-// let selection240kEnd = new Date().getTime();
-// let selection240k = (selection240kEnd - selection240kStart);
-// console.log(selection240k);
-
-// let selection280kStart = new Date().getTime();
-// selectionSort(arr280k);
-// let selection280kEnd = new Date().getTime();
-// let selection280k = (selection280kEnd - selection280kStart);
-// console.log(selection280k);
-
-// let selection320kStart = new Date().getTime();
-// selectionSort(arr320k);
-// let selection320kEnd = new Date().getTime();
-// let selection320k = (selection320kEnd - selection320kStart);
-// console.log(selection320k);
-
-// let selection360kStart = new Date().getTime();
-// selectionSort(arr360k);
-// let selection360kEnd = new Date().getTime();
-// let selection360k = (selection360kEnd - selection360kStart);
-// console.log(selection360k);
-
-// let selection400kStart = new Date().getTime();
-// selectionSort(arr400k);
-// let selection400kEnd = new Date().getTime();
-// let selection400k = (selection400kEnd - selection400kStart);
-// console.log(selection400k);
-
-// let selection450kStart = new Date().getTime();
-// selectionSort(arr450k);
-// let selection450kEnd = new Date().getTime();
-// let selection450k = (selection450kEnd - selection450kStart);
-// console.log(selection450k);
-
-// let selection500kStart = new Date().getTime();
-// selectionSort(arr500k);
-// let selection500kEnd = new Date().getTime();
-// let selection500k = (selection500kEnd - selection500kStart);
-// console.log(selection500k);
+    // appends this data to the file in the format... arrayLength, excTime
+    fs.appendFileSync(_file, lengthsList[i].length + ', ' + excTime + '\n', 'utf8', (err) => {
+      if (err) {
+        console.log('An error occured during append: ' + i);
+      } else {
+        console.log('Data appended: ' + i);
+      };
+    });
+  };
+};
 
 
+const sortLengths = [createSortArr(100), createSortArr(1000), createSortArr(5000), createSortArr(10000), createSortArr(20000), 
+  createSortArr(40000),  createSortArr(80000),  createSortArr(120000), createSortArr(160000), createSortArr(200000), createSortArr(240000), 
+  createSortArr(280000), createSortArr(320000), createSortArr(360000), createSortArr(400000), createSortArr(450000), createSortArr(500000)];
+
+storeSortData(sortLengths, mergeSort, 'data/mergeSort.csv', 1);
+storeSortData(sortLengths, bubbleSort, 'data/bubbleSort.csv', 1);
+storeSortData(sortLengths, insertionSort, 'data/insertionSort.csv', 1);
+storeSortData(sortLengths, selectionSort, 'data/selectionSort.csv', 1);
 
 
-// // 1k Times
+// This next function is an adaption of the above for the extension on the assignment regarding assertion sort.
 
-// let bubble1kStart = new Date().getTime();
-// bubbleSort(arr1k);
-// let bubble1kEnd = new Date().getTime();
-// let bubble1k = (bubble1kEnd - bubble1kStart);
-// console.log(bubble1k);
+function storePartSortData(lengthsList, func, _file, runCount) {
 
-// let selection1kStart = new Date().getTime();
-// selectionSort(arr1k);
-// let selection1kEnd = new Date().getTime();
-// let selection1k = (selection1kEnd - selection1kStart);
-// console.log(selection1k);
+  // creates an empty csv file using the _file parameter
+  fs.writeFileSync(_file, '', 'utf8', (err) => {
+    if (err) {
+      console.log('An error occured during creation');
+    } else {
+      console.log('File created');
+    };
+  });
 
-// let insertion1kStart = new Date().getTime();
-// insertionSort(arr1k);
-// let insertion1kEnd = new Date().getTime();
-// let insertion1k = (insertion1kEnd - insertion1kStart);
-// console.log(insertion1k);
+  // loops over the lengthsList, so that we call the function for each array length
+  for(let i = 0; i < lengthsList.length; i++) {
+    
+    let excTimeList = [];
 
-// let merge1kStart = new Date().getTime();
-// mergeSort(arr1k);
-// let merge1kEnd = new Date().getTime();
-// let merge1k = (merge1kEnd - merge1kStart);
-// console.log(merge1k);
+    // loops 10 times, so that we test with every array length 10 times and store the average
+    for(let j = 0; j < runCount; j++) {
+      let arr       = createPartSortArr(lengthsList[i]);
+      let startTime = new Date().getTime();
+      func(arr);
+      let endTime   = new Date().getTime();
+      excTimeList.push(endTime - startTime);
+    };
 
-// console.log("-------------------------------")
+    // gets the average of all 10 runs on a single array length, lloping over our excTimeList
+    let avgExcTime = 0;
+    for(let i = 0; i < excTimeList.length; i++) {
+      avgExcTime += excTimeList[i];
+    };
+    avgExcTime = avgExcTime / excTimeList.length;
 
-// // 10k Times
+    // appends this data to the file in the format... arrayLength, avgTime/ms
+    fs.appendFileSync(_file, lengthsList[i] + ', ' + avgExcTime + '\n', 'utf8', (err) => {
+      if (err) {
+        console.log('An error occured during append ' + i);
+      } else {
+        console.log('Data appended ' + i);
+      };
+    });
+  };
+};
 
-// let bubble10kStart = new Date().getTime();
-// bubbleSort(arr10k);
-// let bubble10kEnd = new Date().getTime();
-// let bubble10k = (bubble10kEnd - bubble10kStart);
-// console.log(bubble10k);
-
-
-// let selection10kStart = new Date().getTime();
-// selectionSort(arr10k);
-// let selection10kEnd = new Date().getTime();
-// let selection10k = (selection10kEnd - selection10kStart);
-// console.log(selection10k);
-
-
-// let insertion10kStart = new Date().getTime();
-// insertionSort(arr10k);
-// let insertion10kEnd = new Date().getTime();
-// let insertion10k = (insertion10kEnd - insertion10kStart);
-// console.log(insertion10k);
-
-// let merge10kStart = new Date().getTime();
-// mergeSort(arr10k);
-// let merge10kEnd = new Date().getTime();
-// let merge10k = (merge10kEnd - merge10kStart);
-// console.log(merge10k);
-
-// console.log("-------------------------------")
+// storePartSortData(sortLengths, insertionSort, 'insertionPartSort.csv', 1);
 
 
+// --------------- SEARCH --------------- //
+function storeSearchData(lengthsList, func, runCount, _file) {
 
-// // 100k Times
+  // creates an empty csv file using the _file parameter
+  fs.writeFileSync(_file, '', 'utf8', (err) => {
+    if (err) {
+      console.log('An error occured during creation');
+    } else {
+      console.log('File created');
+    };
+  });
 
-// let bubble100kStart = new Date().getTime();
-// bubbleSort(arr100k);
-// let bubble100kEnd = new Date().getTime();
-// let bubble100k = (bubble100kEnd - bubble100kStart);
-// console.log(bubble100k);
+  // loops over the lengthsList, so that we call the function for each array length
+  for(let i = 0; i < lengthsList.length; i++) {
+    
+    let guessNumList = [];
 
+    // loops n times, (n = runCount) so that we test with every array length n times and store the average
+    for(let j = 0; j < runCount; j++) {
 
-// let selection100kStart = new Date().getTime();
-// selectionSort(arr100k);
-// let selection100kEnd = new Date().getTime();
-// let selection100k = (selection100kEnd - selection100kStart);
-// console.log(selection100k);
+      let arr          = createSearchArr(lengthsList[i]);
+      let target_value = Math.floor(Math.random()*arr.length);
+      let guesses      = func(arr, target_value);
 
+      guessNumList.push(guesses);
+    };
 
-// let insertion100kStart = new Date().getTime();
-// insertionSort(arr100k);
-// let insertion100kEnd = new Date().getTime();
-// let insertion100k = (insertion100kEnd - insertion100kStart);
-// console.log(insertion100k);
+    // gets the average of n runs on a single array length, (n = runCount) looping over our guessNumList
+    let avgGuessNum = 0;
+    for(let i = 0; i < guessNumList.length; i++) {
 
+      avgGuessNum = avgGuessNum + guessNumList[i];
+    };
+  
+    avgGuessNum = Math.floor(avgGuessNum / guessNumList.length);
 
-// let merge100kStart = new Date().getTime();
-// mergeSort(arr100k);
-// let merge100kEnd = new Date().getTime();
-// let merge100k = (merge100kEnd - merge100kStart);
-// console.log(merge100k);
+    // appends this data to the file in the format ->  arrayLength, avgGuessNum
+    fs.appendFileSync(_file, lengthsList[i] + ', ' + avgGuessNum + '\n', 'utf8', (err) => {
+      if (err) {
+        console.log('An error occured during append number: ' + i);
+      } else {
+        console.log('Data appended: ' + i);
+      };
+    });
+  };
+};
 
-// console.log("-------------------------------")
+// Execution
+const searchLengths = [100, 1000, 5000, 10000, 20000, 40000, 80000, 120000, 160000, 200000, 240000, 280000, 320000, 
+  360000, 400000, 450000, 500000, 600000, 700000, 800000, 900000, 1000000, 1200000, 1400000, 1600000, 1800000, 2000000];
 
-
-// // 1m Times
-
-// // let bubble1mStart = new Date().getTime();
-// // bubbleSort(arr1m);
-// // let bubble1mEnd = new Date().getTime();
-// // let bubble1m = (bubble1mEnd - bubble1mStart);
-// // console.log(bubble1m);
-
-
-// // let selection1mStart = new Date().getTime();
-// // selectionSort(arr1m);
-// // let selection1mEnd = new Date().getTime();
-// // let selection1m = (selection1mEnd - selection1mStart);
-// // console.log(selection1m);
-
-
-// // let insertion1mStart = new Date().getTime();
-// // insertionSort(arr1m);
-// // let insertion1mEnd = new Date().getTime();
-// // let insertion1m = (insertion1mEnd - insertion1mStart);
-// // console.log(insertion1m);
-
-// // let merge1mStart = new Date().getTime();
-// // mergeSort(arr1m);
-// // let merge1mEnd = new Date().getTime();
-// // let merge1m = (merge1mEnd - merge1mStart);
-// // console.log(merge1m);
+storeSearchData(searchLengths, binarySearch, 1000, 'binarySearch.csv');
+storeSearchData(searchLengths, linearSearch, 1000, 'linearSearch.csv');

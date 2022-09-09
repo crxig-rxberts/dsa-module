@@ -16,5 +16,3 @@ export function insertionSort(arr) {
 };
 
 
-let arr = [5,2,1,3,4]
-// console.log(insertionSort(arr));
