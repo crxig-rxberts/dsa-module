@@ -84,14 +84,14 @@ function storeSortData(lengthsList, func, _file) {
 };
 
 
-const sortLengths = [createSortArr(100), createSortArr(1000), createSortArr(5000), createSortArr(10000), createSortArr(20000), 
-  createSortArr(40000),  createSortArr(80000),  createSortArr(120000), createSortArr(160000), createSortArr(200000), createSortArr(240000), 
-  createSortArr(280000), createSortArr(320000), createSortArr(360000), createSortArr(400000), createSortArr(450000), createSortArr(500000)];
+// const sortLengths = [createSortArr(100), createSortArr(1000), createSortArr(5000), createSortArr(10000), createSortArr(20000), 
+//   createSortArr(40000),  createSortArr(80000),  createSortArr(120000), createSortArr(160000), createSortArr(200000), createSortArr(240000), 
+//   createSortArr(280000), createSortArr(320000), createSortArr(360000), createSortArr(400000), createSortArr(450000), createSortArr(500000)];
 
-storeSortData(sortLengths, mergeSort, 'data/mergeSort.csv', 1);
-storeSortData(sortLengths, bubbleSort, 'data/bubbleSort.csv', 1);
-storeSortData(sortLengths, insertionSort, 'data/insertionSort.csv', 1);
-storeSortData(sortLengths, selectionSort, 'data/selectionSort.csv', 1);
+// storeSortData(sortLengths, mergeSort, 'data/mergeSort.csv', 1);
+// storeSortData(sortLengths, bubbleSort, 'data/bubbleSort.csv', 1);
+// storeSortData(sortLengths, insertionSort, 'data/insertionSort.csv', 1);
+// storeSortData(sortLengths, selectionSort, 'data/selectionSort.csv', 1);
 
 
 // This next function is an adaption of the above for the extension on the assignment regarding assertion sort.
@@ -190,8 +190,58 @@ function storeSearchData(lengthsList, func, runCount, _file) {
 };
 
 // Execution
-const searchLengths = [100, 1000, 5000, 10000, 20000, 40000, 80000, 120000, 160000, 200000, 240000, 280000, 320000, 
-  360000, 400000, 450000, 500000, 600000, 700000, 800000, 900000, 1000000, 1200000, 1400000, 1600000, 1800000, 2000000];
+// const searchLengths = [100, 1000, 5000, 10000, 20000, 40000, 80000, 120000, 160000, 200000, 240000, 280000, 320000, 
+//   360000, 400000, 450000, 500000, 600000, 700000, 800000, 900000, 1000000, 1200000, 1400000, 1600000, 1800000, 2000000];
 
-storeSearchData(searchLengths, binarySearch, 1000, 'binarySearch.csv');
-storeSearchData(searchLengths, linearSearch, 1000, 'linearSearch.csv');
+// storeSearchData(searchLengths, binarySearch, 1000, 'binarySearch.csv');
+// storeSearchData(searchLengths, linearSearch, 1000, 'linearSearch.csv');
+
+
+
+
+
+// ---------------------------- RECURSION SECTION ----------------------------- //
+
+
+// M = 1, C = 2, V = 3
+
+// n(1) = 1
+// n(2) = 2
+// n(3) = 4
+// n(4) = 7
+// n(5) = 13
+// n(6) = 24
+
+// n(6) = (n(5) - 1) x 2
+
+
+// MMMMM
+// CMMM
+// MMMC
+// MCMM
+// MMCM
+// VC
+// CV
+// MMV
+// MVM
+// VMM
+// CCM
+// CMC
+// MCC
+
+function Parking(n) {
+
+  if(n == 1) {
+    return 1;
+
+  } else if(n == 2) {
+    return 2;
+  
+  } else if(n == 3) {
+    return 4;
+  }
+
+  return Parking(n - 1) + Parking(n - 2) + Parking(n - 3);
+};
+
+console.log(Parking(3));
