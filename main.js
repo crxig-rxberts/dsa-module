@@ -7,12 +7,18 @@ import {binarySearch}   from './search-algs/binarySearch.mjs';
 import * as fs from 'fs';
 
 // README 
-// This program executes the sort or search algorithms n times. The two main functions 'storeSortData' & 'storeSearchData' will create csv files, loop over a list of arrary lengths,
-// execute the function and then store the effiency data we get back from that. The nested for loop within both functions using index j can be changed to perform this action as many times
-// as neccessary, the functions will take an average an only store that value.
+// ===================================================================================================================================================================================
+// line 58 onward sort algorithm execution
+// line 165 onward search algorithm execution
+// line 227 onward recursion
+// ===================================================================================================================================================================================
+// This program executes the sort or search algorithms n times. The two main functions 'storeSortData' & 'storeSearchData' will create csv files, loop over a list of arrary 
+// lengths, execute the function and then store the effiency data we get back from that. The nested for loop within the search function using index j can be changed to perform this 
+// action as many times as neccessary, the function will take an average an only store that value.
 // Executing the function looks like this functionCall(sortLengths, mergeSort, 'filename.csv', 1);
-// Where sortLengths is a pre initialised array of sizes that you would like to be tests. mergeSort is the function name of the chosen algorithm and '1' is the amount of test runs you would like to perform.
-
+// Where sortLengths is a pre initialised array of sizes that you would like to be tested. mergeSort is the function name of the chosen algorithm and '1' 
+// is the amount of test runs you would like to perform. See line 160 onwards.
+// ===================================================================================================================================================================================
 
 
 function createSortArr(length) {
@@ -83,18 +89,24 @@ function storeSortData(lengthsList, func, _file) {
   };
 };
 
+// sortLengths is initialised in this way so that the sort algortihms use the same set of data for each run. 
 
 // const sortLengths = [createSortArr(100), createSortArr(1000), createSortArr(5000), createSortArr(10000), createSortArr(20000), 
-//   createSortArr(40000),  createSortArr(80000),  createSortArr(120000), createSortArr(160000), createSortArr(200000), createSortArr(240000), 
-//   createSortArr(280000), createSortArr(320000), createSortArr(360000), createSortArr(400000), createSortArr(450000), createSortArr(500000)];
+//    createSortArr(40000),  createSortArr(80000),  createSortArr(120000), createSortArr(160000), createSortArr(200000), createSortArr(240000), 
+//    createSortArr(280000), createSortArr(320000), createSortArr(360000), createSortArr(400000), createSortArr(450000), createSortArr(500000)];
 
-// storeSortData(sortLengths, mergeSort, 'data/mergeSort.csv', 1);
-// storeSortData(sortLengths, bubbleSort, 'data/bubbleSort.csv', 1);
-// storeSortData(sortLengths, insertionSort, 'data/insertionSort.csv', 1);
-// storeSortData(sortLengths, selectionSort, 'data/selectionSort.csv', 1);
+// storeSortData(sortLengths, mergeSort, 'data/mergeSort.csv');
+// storeSortData(sortLengths, bubbleSort, 'data/bubbleSort.csv');
+// storeSortData(sortLengths, insertionSort, 'data/insertionSort.csv');
+// storeSortData(sortLengths, selectionSort, 'data/selectionSort.csv');
 
 
-// This next function is an adaption of the above for the extension on the assignment regarding assertion sort.
+
+
+
+
+
+// This next function is an adaption of the above for the extension on the assignment regarding insertion sort.
 
 function storePartSortData(lengthsList, func, _file, runCount) {
 
@@ -140,6 +152,14 @@ function storePartSortData(lengthsList, func, _file, runCount) {
 };
 
 // storePartSortData(sortLengths, insertionSort, 'insertionPartSort.csv', 1);
+
+
+
+
+
+
+
+
 
 
 // --------------- SEARCH --------------- //
@@ -200,19 +220,30 @@ function storeSearchData(lengthsList, func, runCount, _file) {
 
 
 
+
+
+
+
+
+
+
 // ---------------------------- RECURSION SECTION ----------------------------- //
 
+// The below section is written for the recursion part of the assignment, we have the function itself and then execution capturing efficiency data
+// Comments below were just to aid me in understanding the formula. 
 
 // M = 1, C = 2, V = 3
 
-// n(1) = 1
-// n(2) = 2
-// n(3) = 4
-// n(4) = 7
-// n(5) = 13
-// n(6) = 24
+// P(n)
+// P(1) = 1
+// P(2) = 2
+// P(3) = 4
+// P(4) = 7
+// P(5) = 13
+// P(6) = 24
+// P(7) = 44
+// P(8) = 81
 
-// n(6) = (n(5) - 1) x 2
 
 
 // MMMMM
@@ -244,4 +275,8 @@ function Parking(n) {
   return Parking(n - 1) + Parking(n - 2) + Parking(n - 3);
 };
 
-console.log(Parking(3));
+
+for(let i = 1; i <= 8; i = i + 1) {
+  console.log(Parking(i))
+}
+
